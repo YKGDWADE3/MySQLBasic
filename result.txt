@@ -14,3 +14,10 @@ practice2
 | alibaba     | xiaohong |
 | tengxun     | xiaozhi  |
 +-------------+----------+
+
+practice3
++-------------+-----------+
+| companyName | avgSalary |
++-------------+-----------+
+| tengxun     |      8000 |
++-------------+-----------+
