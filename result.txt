@@ -1,5 +1,7 @@
 practice1
 
+mysql> select * from Employee where name like "%n%" and salary > 6000;
+
 +----+----------+-----+--------+-----------+--------+
 | id | name     | age | gender | companyId | salary |
 +----+----------+-----+--------+-----------+--------+
@@ -7,6 +9,11 @@ practice1
 +----+----------+-----+--------+-----------+--------+
 
 practice2
+
+mysql> select c.companyName, e.name from (
+select companyId,max(salary) maxSal from Employee group by companyId) m,Company c, Employee e 
+where m.maxSal=e.salary and m.companyId=e.companyId and c.id=m.companyId;
+
 +-------------+----------+
 | companyName | name     |
 +-------------+----------+
@@ -16,6 +23,13 @@ practice2
 +-------------+----------+
 
 practice3
+
+mysql> select c.companyName, e.avgSalary from(
+    -> select avg(salary) avgSalary, companyId from Employee group by companyId) e,Company c 
+	where e.avgSalary=(select max(avgSalary) from (
+	select avg(salary) avgSalary from Employee group by companyId) e1) 
+	and c.id=e.companyId;
+	
 +-------------+-----------+
 | companyName | avgSalary |
 +-------------+-----------+
@@ -23,6 +37,11 @@ practice3
 +-------------+-----------+
 
 practice4
+
+mysql> select e.id,e.name,e.age,e.gender,e.companyId,e.salary,c.companyName,a.avgSal from (
+select avg(salary) avgSal,companyId from Employee group by companyId) a,Employee e,Company c 
+where c.id=a.companyId and e.companyId=a.companyId and e.salary > a.avgSal;
+
 +----+----------+-----+--------+-----------+--------+-------------+--------+
 | id | name     | age | gender | companyId | salary | companyName | avgSal |
 +----+----------+-----+--------+-----------+--------+-------------+--------+
